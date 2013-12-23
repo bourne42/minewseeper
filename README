@@ -1,0 +1,24 @@
+Creating an always solvable minesweeper
+
+Required CUDA (CUDA enabled Nvidia GPU)
+
+Started as project for Parallel class
+Project page:
+http://www.andrew.cmu.edu/user/cverkler/418_final/
+Final Report Page:
+http://www.andrew.cmu.edu/user/cverkler/418_final/finalreport.html
+
+See links for description of goals
+
+No GUI currently, just text
+
+To use:
+Auguents: -h height : height of the grid
+-w width : width of the grid
+-b number_of_bombs : number of bombs in the grid
+-t : flag; display run times for various parts of the algorithm
+-k : flag; display known grid
+-d : flag; display debug grids
+
+To play enter in grid coordinate : x y
+To flag a grid enter : x y f
