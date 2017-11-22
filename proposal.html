@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>CMU 15-418/618 (Spring 2013) Final Project Proposal</title>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+
+<div class="constrainedWidth">
+
+<div style="padding-bottom: 10px;">
+<div class="title smallTitle">Project Proposal:</div>
+<div class="title" style="width: 900px; padding-bottom: 6px; border-bottom: #000000 2px solid;">
+  Always Solvable Minesweeper
+</div>
+</div>
+
+<div class="boldText">
+<div>Conrad Verkler</div>
+</div>
+
+<div style="padding-top: 1em;"><a href="index.html">Main Project Page</a></div>
+
+<div class="section">Summary</div>
+I am going to implement an always solvable minesweeper using CUDA. The program should be playable and always give a setup where there is a cell that can be clear or is a mine.
+<br>
+
+<div class="section">Background</div>
+Minesweeper: a player starts with a blank grid with mines under random tiles. When a tile is clicked it displayes the number of bombs adjacent to it (including diagonal for a max of 8). The player loses if they click a tile with a bomb. The player can also place flags where they know there is no bomb. <br>
+<br>
+<img src='unsolvable.jpg'><br>
+Part of a minesweeper game with and unsolvable situation <br>
+<br>
+Very frequently in minesweeper there are situations where there is no logical next step- any tile could have a bomb or not and even a brute force check of all possibilities wouldn't give a single solution. This leads to guessing and frustration. Given some existing exposed tiles and mine placement there are an exponential amount of possible bomb placements to test to see if there exists a solution. Very similar to solving the wandering salesman problem this gives some clear opportunities to use parallelism. <br>
+<br>
+Just testing if there is a solution or not is part of the problem, but it would also be nice if the game would do something if an unsolvable situation came up, or even magically kept them from happening in the first place. Obviously there are mine placements that will give a completely solvable game, but finding those is even more complex because of huge amount of possibilities and different opening moves. Another simpler solution is that whenever there isn't a solution, click on a bombless tile for the player. There are other possible middle grounds that don't involve too much computation but may avoid the no-solution case more often. <br>
+<br>
+
+<div class="section">Challenge</div>
+One of the first challenges when finding if a there exists a solution is severe workload imbalance between different placements of mines. A solution that fills the grid with mines will clearly be impossible and quickly be thrown out. If there is a solution then the process can halt, but if there isn't than every possibility must be tested. Furthmore if nodes examine solutions that are similar to eachother they will probably have pretty similar runtimes, further emphasizing load imbalance. <br>
+<br>
+There is also the issue of what the best solution is when faced with no solution. The easy way is to reveal cells to the player till there is a solution, but this probably won't lead to as enjoyable user experience. A more invisible solution (the goal is for the puzzle to appear solvable from the start) requires more complex code and probably significantly more computation.
+<br>
+
+<div class="section">Resources</div>
+Since my personal computer can't run CUDA I will be using the Gates machines. I will be starting mostly from scratch, probably referencing assignment 2 for code specific to CUDA. From past experience and looking at some code online implementing a basic minesweeper game only takes a couple hours. I will start with just text based, because that is easy to implement and I can easily run code off the Gates machines. If I have enough time or decide it will be a good enough feature I may implement a GUI, which I won't write from scratch and will find some code online to do.
+
+<div class="section">Goals/Deliverables</div>
+<h3>Plan to achieve:</h3>- Text based game of minesweeper <br>
+- Game will detect if there isn't a solution and will unveil tiles till the player can procede <br>
+- Have a way to start the game - give the player some setup where thay have at least one (preferable more) ways of proceding <br>
+- Perform all computations fast enough to have a clost to real time gameplay <br>
+<br>
+<h3>Hope to achieve:</h3>
+- Behind the scenes calculations that will try to move bombs around so that the player will get unsolvable situations less often <br>
+- If the player makes a move that could have been wrong (but because of a lucky guess isn't), make it wrong (hard mode) <br>
+- Implement a GUI <br>
+- Implement a serial version or less parallel version with ISPC and compare run times <br>
+<br>
+
+<div class="section">Platform</div>
+I will be using the Gates machines and programming in CUDA and C++. Using CUDA is the logical choice because the program has to make a lot of calculations but has to be responsive to the user, so using a blacklight wouldn't make sense. While there are many tasks to perform individually they will be relatively easy to do and there doesn't need to be much communication between different threads because they're all independent. <br>
+<br>
+
+<div class="section">Proposed Schedule</div>
+
+<p>
+<table class="projectSchedule">
+<tr>
+  <td width="110"><span style="font-weight: bold;">Week</span></td>
+  <td width="380"><span style="font-weight: bold;">What We Plan To Do</span></td>
+</tr>
+<tr><td>Apr 1-7</td><td>Brainstorming different project ideas</td></tr>
+<tr><td>Apr 8-14</td><td>Working minesweeper game. Be able to send requests to the GPU</td></tr>
+<tr><td>Apr 15-21</td><td>Detect if there is no solution, don't get too distracted by Carnival</td></tr>
+<tr><td>Apr 22-28</td><td>Improve no-solution detection (speed), begin working on a solution to predict unsolvable situations and prevent</td></tr>
+<tr><td>Apr 29-May 5</td><td>Continue/finish preventing unsolvable situations. </td></tr>
+<tr><td>May 6-11</td><td>Final improvements. GUI if time</td></tr>
+</table>
+</p>
+
+</div>
+
+</body>
+</html>
