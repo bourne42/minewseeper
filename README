@@ -1,16 +1,11 @@
-Creating an always solvable minesweeper
+Creating an always solvable minesweeper - project for parallel computing class
+Uses CUDA to run on the GPU. 
 
-Required CUDA (CUDA enabled Nvidia GPU)
+Often when playing minesweeper you get stuck, there will be literally no way to determine another cell to uncover. Unfortunately detecting this situation can be an NP hard problem (each possible grid space could be a mine or not, you have to check every option to determine if there is a solution). In order to solve this problem I use the graphics card to brute force test each possible solution and determine if there are any future moves for the given grid. 
 
-Started as project for Parallel class
-Project page:
-http://www.andrew.cmu.edu/user/cverkler/418_final/
-Final Report Page:
-http://www.andrew.cmu.edu/user/cverkler/418_final/finalreport.html
+Right now all it does when there are no moves is reveal new tiles until there are.
 
-See links for description of goals
-
-No GUI currently, just text
+No GUI, just text
 
 To use:
 Auguents: -h height : height of the grid
